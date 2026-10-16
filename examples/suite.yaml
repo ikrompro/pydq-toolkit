@@ -1,0 +1,42 @@
+# Orders quality gate. as_of is fixed so the freshness check stays reproducible.
+version: 1
+name: orders_quality
+sample_size: 5
+as_of: "2026-10-16T12:00:00Z"
+checks:
+  - type: not_null
+    column: order_id
+    name: order_id is present
+  - type: not_null
+    column: email
+    name: email is present
+  - type: unique
+    column: order_id
+  - type: in_range
+    column: amount
+    min: 0
+    max: 10000
+  - type: allowed_values
+    column: status
+    values: [pending, shipped, delivered]
+  - type: regex_match
+    column: email
+    pattern: '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+  - type: row_count_between
+    min: 1
+    max: 1000
+  - type: freshness
+    column: ordered_at
+    max_age: 48h
+  - type: schema
+    columns:
+      order_id: int64
+      customer_id: int64
+      amount: float64
+      status: string
+      email: string
+      ordered_at: string
+  - type: referential_integrity
+    column: customer_id
+    ref: customers
+    ref_column: customer_id

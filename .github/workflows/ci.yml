@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: python -m pip install -e ".[dev]"
+      - name: Ruff
+        run: |
+          ruff check .
+          ruff format --check .
+      - name: Mypy
+        run: mypy src
+
+  test:
+    name: test (${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: python -m pip install -e ".[dev]"
+      - name: Test
+        run: pytest --cov-report=term-missing --cov-report=json
+      - name: Coverage summary
+        if: matrix.python-version == '3.12'
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          payload = json.loads(Path("coverage.json").read_text(encoding="utf-8"))
+          percent = payload["totals"]["percent_covered_display"]
+          summary = os.environ.get("GITHUB_STEP_SUMMARY")
+          print(f"Branch coverage: {percent}%")
+          if summary:
+              Path(summary).write_text(
+                  f"### Coverage\n\nPython 3.12 branch coverage: **{percent}%**\n",
+                  encoding="utf-8",
+              )
+          PY

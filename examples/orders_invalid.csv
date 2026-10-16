@@ -1,0 +1,10 @@
+order_id,customer_id,amount,status,email,ordered_at
+2001,1,10.00,shipped,ok@example.com,2020-06-01T09:00:00Z
+2001,2,11.00,pending,ok2@example.com,2020-06-01T09:05:00Z
+2003,999,12.50,delivered,ok3@example.com,2020-06-01T09:10:00Z
+2004,3,-5.00,shipped,ok4@example.com,2020-06-01T09:15:00Z
+2005,4,20.00,refunded,ok5@example.com,2020-06-01T09:20:00Z
+2006,5,30.00,pending,not-an-email,2020-06-01T09:25:00Z
+2007,6,40.00,pending,,2020-06-01T09:30:00Z
+2008,1,50.00,delivered,ok8@example.com,2020-01-01T00:00:00Z
+2009,2,18.00,shipped,clean@example.com,2020-06-02T11:00:00Z

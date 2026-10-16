@@ -1,0 +1,7 @@
+customer_id,name,email,country,created_at
+1,Ava Quinn,ava.quinn@example.com,US,2024-01-15T10:00:00Z
+2,Noah Patel,noah.patel@example.com,CA,2024-03-02T15:30:00Z
+3,Mia Chen,mia.chen@example.com,GB,2024-06-21T08:05:00Z
+4,Leo Alvarez,leo.alvarez@example.com,MX,2024-11-09T19:45:00Z
+5,Sofia Rossi,sofia.rossi@example.com,IT,2025-02-14T12:20:00Z
+6,Jonah Berg,jonah.berg@example.com,SE,2025-08-30T07:10:00Z

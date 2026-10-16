@@ -1,0 +1,13 @@
+order_id,customer_id,amount,status,email,ordered_at
+1001,1,42.50,shipped,buyer1@example.com,2026-10-15T18:00:00Z
+1002,2,15.00,pending,buyer2@example.com,2026-10-16T09:30:00Z
+1003,3,128.75,delivered,buyer3@example.com,2026-10-15T12:15:00Z
+1004,4,9.99,shipped,buyer4@example.com,2026-10-16T01:05:00Z
+1005,5,640.00,pending,buyer5@example.com,2026-10-16T11:45:00Z
+1006,6,88.20,delivered,buyer6@example.com,2026-10-14T13:00:00Z
+1007,1,250.00,shipped,ava.quinn@example.com,2026-10-16T08:20:00Z
+1008,2,33.33,pending,noah.patel@example.com,2026-10-15T22:40:00Z
+1009,3,17.10,delivered,mia.chen@example.com,2026-10-16T06:00:00Z
+1010,4,499.95,shipped,leo.alvarez@example.com,2026-10-15T16:16:00Z
+1011,5,72.00,pending,sofia.rossi@example.com,2026-10-16T10:10:00Z
+1012,6,5.50,delivered,jonah.berg@example.com,2026-10-14T20:30:00Z
