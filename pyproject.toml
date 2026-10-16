@@ -1,0 +1,119 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pydq-toolkit"
+version = "0.1.0"
+description = "Declarative data-quality checks for pandas and polars DataFrames."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10,<3.13"
+authors = [{ name = "Ikrom" }]
+keywords = ["data-quality", "pandas", "polars", "validation", "dataframe"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Typing :: Typed",
+]
+dependencies = [
+  "pandas>=2.0",
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+polars = ["polars>=1.0"]
+parquet = ["pyarrow>=14"]
+dev = [
+  "mypy>=1.11",
+  "pandas-stubs>=2.0",
+  "pre-commit>=3.5",
+  "polars>=1.0",
+  "pyarrow>=14",
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.6",
+  "types-PyYAML>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ikrompro/pydq-toolkit"
+Repository = "https://github.com/ikrompro/pydq-toolkit"
+Changelog = "https://github.com/ikrompro/pydq-toolkit/blob/main/CHANGELOG.md"
+Issues = "https://github.com/ikrompro/pydq-toolkit/issues"
+
+[project.scripts]
+pydq = "pydq.cli:main"
+
+[tool.hatch.build.targets.wheel]
+only-include = ["src/pydq"]
+
+[tool.hatch.build.targets.wheel.sources]
+"src" = ""
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/pydq",
+  "tests",
+  "examples",
+  "README.md",
+  "LICENSE",
+  "CHANGELOG.md",
+  "CONTRIBUTING.md",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["src", "tests", "examples"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "D", "ANN"]
+ignore = ["D105", "D107", "ANN401"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D", "ANN"]
+"examples/**" = ["D", "ANN"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+packages = ["pydq"]
+mypy_path = "src"
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["polars", "polars.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q --cov=pydq --cov-report=term-missing --cov-fail-under=90"
+
+[tool.coverage.run]
+branch = true
+source = ["pydq"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_lines = [
+  "pragma: no cover",
+  "if __name__ == .__main__.:",
+  "raise NotImplementedError",
+]
